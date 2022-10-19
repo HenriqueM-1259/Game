@@ -27,7 +27,7 @@ namespace GammingTest2
         public Vector2f posicao { get; set; }
         public float width { get; set; } = 20f;
         public float height { get; set; } = 20f;
-
+        
         
         public void RandLocation()
         {
@@ -48,13 +48,6 @@ namespace GammingTest2
 
         public RectangleShape FrutaDrawn()
         {
-
-
-            /* RectangleShape playerDraw = new RectangleShape();
-             playerDraw.Size = new Vector2f(width, height);
-             playerDraw.Position = new Vector2f(this.x,this.y);
-             playerDraw.FillColor = Color.Yellow;*/
-
 
             RectangleShape frutaDrawn = new RectangleShape(new Vector2f(width, height))
             {
@@ -78,6 +71,8 @@ namespace GammingTest2
             RenderWindow renderWindow;
             renderWindow = new RenderWindow(new VideoMode(860, 500), "First window");
             renderWindow.Closed += (_, __) => renderWindow.Close();
+            renderWindow.SetVerticalSyncEnabled(true);
+            renderWindow.SetFramerateLimit(60);
             Console.WriteLine("Iniciado...");
 
 
@@ -91,9 +86,6 @@ namespace GammingTest2
 
                 player.Drawn();
                 player.Update();
-
-
-
                 renderWindow.Display();
             }
 
