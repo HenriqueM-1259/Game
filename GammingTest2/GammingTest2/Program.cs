@@ -5,6 +5,7 @@ using SFML.Window;
 using System;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.CompilerServices;
+using System.Security.Cryptography.X509Certificates;
 
 namespace GammingTest2
 {
@@ -21,49 +22,6 @@ namespace GammingTest2
        
     }
 
-
-    class Frutas
-    {
-        public Vector2f posicao { get; set; }
-        public float width { get; set; } = 20f;
-        public float height { get; set; } = 20f;
-        
-        
-        public void RandLocation()
-        {
-            int x = RandomNumber(50, 500);
-            int y = RandomNumber(50, 500);
-            posicao =  new Vector2f(x, y);
-        }
-        
-        private int RandomNumber(int min, int max)
-        {
-            Random random = new Random();
-            return random.Next(min, max);
-        }
-        public void removeFruta()
-        {
-            this.posicao = new Vector2f(0,0);
-        }
-
-        public RectangleShape FrutaDrawn()
-        {
-
-            RectangleShape frutaDrawn = new RectangleShape(new Vector2f(width, height))
-            {
-
-                FillColor = Color.Black,
-                Position = posicao
-
-             };
-            if (frutaDrawn.Position == new Vector2f(0,0))
-           {
-                RandLocation();
-           }          
-            return frutaDrawn;
-        }
-    }
-    
     class ViewWindow
     {
         public void Run()
@@ -77,20 +35,37 @@ namespace GammingTest2
 
 
             Player player = new Player(renderWindow);
-          
+            Frutas frutas = new Frutas(renderWindow);
             
             while (renderWindow.IsOpen)
             {
                 renderWindow.DispatchEvents();
                 renderWindow.Clear(Color.White);
-
                 player.Drawn();
                 player.Update();
+                if (RetornaColisaoPlayerFrutas(player,frutas))
+                {
+                    frutas.removeFruta();
+                }
+                frutas.Drawn();
+                frutas.Update();
                 renderWindow.Display();
             }
-
+         
 
         }
-        
+        public bool RetornaColisaoPlayerFrutas(Player p, Frutas f)
+        {
+            if (p.Position.X < f.posicao.X + f.tamanho.X &&
+                p.Position.X + p.Tamanho.X > f.posicao.X &&
+                p.Position.Y < f.posicao.Y + f.tamanho.Y &&
+                p.Position.Y + p.Tamanho.Y > f.posicao.Y)
+            {
+                
+                    return true;
+     
+            }
+            return false;
+        }
     }
 }
