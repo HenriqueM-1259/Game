@@ -3,6 +3,7 @@ using SFML.System;
 using SFML.Window;
 using System;
 using System.Collections.Generic;
+using System.Numerics;
 using System.Text;
 
 namespace GammingTest2
@@ -15,19 +16,19 @@ namespace GammingTest2
         Baixo
     }
 
-    internal class Player
+     public class Player
     {
         
         public Player(RenderWindow win)
         {
-            this.win = win;
+            this.win = win;         
         }
         public RenderWindow  win { get; set; }
         public Vector2f Position { get; set; } = new Vector2f(100,100);
         public Vector2f Tamanho { get; set; } = new Vector2f(25, 40);
         private RectangleShape rectangleShape { get; set; }
         public float velocity { get; set; } = 2.5f;
-
+       
         public void SetPosition(float? x, float? y)
         {
             Vector2f p = Position;
@@ -76,11 +77,15 @@ namespace GammingTest2
         public void Drawn()
         {
             win.Draw(CriarPersonagem());
+            
+          
         }
 
         public void Update()
         {
             keyBoard();
+            
+                
         }
 
 
@@ -118,7 +123,7 @@ namespace GammingTest2
                 if (Position.Y > win.Size.Y - 35)
                     resetPosition(Lado.Baixo);
             }
-
+            
         }
 
     }

@@ -12,7 +12,7 @@ namespace GammingTest2
         {
             this.renderWindow = renderWindow;
         }
-        public Vector2f posicao { get; set; }
+        public Vector2f posicao { get; set; } = new Vector2f(-100,-100);
         public Vector2f tamanho { get; set; } = new Vector2f(20,20);
         public RenderWindow renderWindow { get; set; }
 
@@ -34,7 +34,7 @@ namespace GammingTest2
         }
         public void removeFruta()
         {
-            this.posicao = new Vector2f(0, 0);
+            this.posicao = new Vector2f(-100,-100);
         }
 
         public void Drawn()
@@ -43,7 +43,7 @@ namespace GammingTest2
         }
         public void Update()
         {
-            if (posicao == new Vector2f(0,0))
+            if (posicao == new Vector2f(-100, -100))
             {
                 RandLocation();
             }
