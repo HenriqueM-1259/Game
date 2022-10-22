@@ -71,7 +71,7 @@ namespace GammingTest2
 
         public void Update()
         {
-            if (inimigosLista.Count == 0)
+            if (inimigosLista.Count < 4)
             {
                 Inimigo inimigo = new Inimigo()
                 {
