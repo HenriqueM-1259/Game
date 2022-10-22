@@ -1,4 +1,5 @@
-﻿using SFML.Graphics;
+﻿using GammingTest2.Enums;
+using SFML.Graphics;
 using SFML.System;
 using SFML.Window;
 using System;
@@ -31,6 +32,7 @@ namespace GammingTest2
         {
 
         }
+        
         public int id { get; set; }
         public RenderWindow renderWindow { get; set; }
         public Vector2f position { get; set; }
@@ -42,6 +44,7 @@ namespace GammingTest2
         public float velocity { get; set; } = 3;
 
         public Vector2f permapos;
+        public Lado ladotiro { get; set; }
         public void drawn()
         {
             if (balaList.Count > 0)
@@ -49,7 +52,32 @@ namespace GammingTest2
                 foreach (var item in balaList)
                 {
                     renderWindow.Draw(item.Gerar());
-                    item.SetPosition(1, 0);
+                    switch (item.ladotiro)
+                    {
+                        case Lado.Cima:
+                            Vector2f pos = item.position;
+                            pos.Y -= 1;
+                            item.SetPosition(pos);
+                            break;
+                        case Lado.Direita:
+                            Vector2f pos2 = item.position;
+                            pos2.X += 1;
+                            item.SetPosition(pos2);
+                            break;
+                        case Lado.Esquerda:
+                            Vector2f pos3 = item.position;
+                            pos3.X -= 1;
+                            item.SetPosition(pos3);
+                            break;
+                        case Lado.Baixo:
+                            Vector2f pos4 = item.position;
+                            pos4.Y += 1;
+                            item.SetPosition(pos4);
+                            break;
+                        default:
+                            break;
+                    }
+
                 }
             }
         }
@@ -60,22 +88,108 @@ namespace GammingTest2
             {
                 foreach (var item in balaList)
                 {
-                    item.SetPosition(1, 0);
+                    switch (item.ladotiro)
+                    {
+                        case Lado.Cima:
+                            Vector2f pos = item.position;
+                            pos.Y -= 1;
+                            item.SetPosition(pos);
+                            break;
+                        case Lado.Direita:
+                            Vector2f pos2 = item.position;
+                            pos2.X += 1;
+                            item.SetPosition(pos2);
+                            break;
+                        case Lado.Esquerda:
+                            Vector2f pos3 = item.position;
+                            pos3.X -= 1;
+                            item.SetPosition(pos3);
+                            break;
+                        case Lado.Baixo:
+                            Vector2f pos4 = item.position;
+                            pos4.Y += 1;
+                            item.SetPosition(pos4);
+                            break;
+                        default:
+                            break;
+                    }
+
+                   
                 }
 
                 for (int i = 0; i < balaList.Count; i++)
                 {
-                    if (permapos.X + 30 > balaList[i].position.X)
+                    switch (balaList[i].ladotiro)
                     {
-                        Bala b1 = balaList[i];
+                       case Enums.Lado.Cima:
 
-                        this.balaList[i].tiraBala = false;
-                    }
-                    else
-                    {
-                      this.balaList[i].tiraBala = true;
 
+                            float y = 0;
+                            y = y - permapos.Y;
+                            float y2 = 0;
+                            y2 = y2 -= balaList[i].position.Y;
+
+                            if (y2 - 30 < y)
+                            {
+
+
+                                this.balaList[i].tiraBala = false;
+                            }
+                            else
+                            {
+                                this.balaList[i].tiraBala = true;
+
+                            }
+                            break;
+                        case Enums.Lado.Direita:
+                            if (permapos.X + 30 > Math.Abs(balaList[i].position.X))
+                            {
+                                
+
+                                this.balaList[i].tiraBala = false;
+                            }
+                            else
+                            {
+                                this.balaList[i].tiraBala = true;
+
+                            }
+                            break;
+                            case Enums.Lado.Esquerda:
+
+                            float x = 0;
+                              x = x - permapos.X;
+                            float x2 = 0;
+                              x2 = x2 -= balaList[i].position.X;
+
+                            if (x2 - 30 < x)
+                            {
+                                
+
+                                this.balaList[i].tiraBala = false;
+                            }
+                            else
+                            {
+                                this.balaList[i].tiraBala = true;
+
+                            }
+                            break;
+                        case Enums.Lado.Baixo:
+                            if (permapos.Y + 30 > balaList[i].position.Y)
+                            {
+
+
+                                this.balaList[i].tiraBala = false;
+                            }
+                            else
+                            {
+                                this.balaList[i].tiraBala = true;
+
+                            }
+                            break;
+                        default:
+                            break;
                     }
+                   
 
                 }
 
@@ -83,14 +197,9 @@ namespace GammingTest2
            
 
         }
-        public void SetPosition(float? x, float? y)
+        public void SetPosition(Vector2f POS)
         {
-            Vector2f p = position;
-            float v = x.Value * velocity;
-            
-            p.X += x.Value + v;
-            p.Y += y.Value;
-            position = p;
+            position = POS;
         }
         public void atirar()
         {
@@ -109,6 +218,25 @@ namespace GammingTest2
                     Vector2f v = new Vector2f(posx, posy);
                     bala.position = v;
                     permapos = v;
+
+                    switch (player.lado)
+                    {
+                        case Lado.Cima:
+                            bala.ladotiro = Lado.Cima;
+                            break;
+                        case Lado.Direita:
+                            bala.ladotiro = Lado.Direita;
+                            break;
+                        case Lado.Esquerda:
+                            bala.ladotiro = Lado.Esquerda;
+                            break;
+                        case Lado.Baixo:
+                            bala.ladotiro = Lado.Baixo;
+                            break;
+                        default:
+                            break;
+                    }
+
                     balaList.Add(bala);
                 }
                 else if (balaList.Count > 0)
@@ -131,6 +259,23 @@ namespace GammingTest2
                         Vector2f v = new Vector2f(posx, posy);
                         permapos = v;                     
                         bala.position = v;
+                        switch (player.lado)
+                        {
+                            case Lado.Cima:
+                                bala.ladotiro = Lado.Cima;
+                                break;
+                            case Lado.Direita:
+                                bala.ladotiro = Lado.Direita;
+                                break;
+                            case Lado.Esquerda:
+                                bala.ladotiro = Lado.Esquerda;
+                                break;
+                            case Lado.Baixo:
+                                bala.ladotiro = Lado.Baixo;
+                                break;
+                            default:
+                                break;
+                        }
 
                         balaList.Add(bala);
                     }

@@ -1,4 +1,5 @@
-﻿using SFML.Graphics;
+﻿using GammingTest2.Enums;
+using SFML.Graphics;
 using SFML.System;
 using SFML.Window;
 using System;
@@ -8,13 +9,7 @@ using System.Text;
 
 namespace GammingTest2
 {
-    public enum Lado
-    {
-        Cima,
-        Direita,
-        Esquerda,
-        Baixo
-    }
+    
 
      public class Player
     {
@@ -28,7 +23,7 @@ namespace GammingTest2
         public Vector2f Tamanho { get; set; } = new Vector2f(25, 40);
         private RectangleShape rectangleShape { get; set; }
         public float velocity { get; set; } = 2.5f;
-       
+        public Lado lado { get; set; }
         public void SetPosition(float? x, float? y)
         {
             Vector2f p = Position;
@@ -95,6 +90,7 @@ namespace GammingTest2
             {
                 if (Position.X <= win.Size.X - 25)
                     SetPosition(3.1f, 0);
+                    lado = Lado.Direita;
 
                 if (Position.X > win.Size.X - 25)
                     resetPosition(Lado.Direita);
@@ -103,14 +99,16 @@ namespace GammingTest2
             {
                 if (Position.X >= 0)
                     SetPosition(-3.1f, 0);
+                    lado = Lado.Esquerda;
 
-                if(Position.X < 0)
+                if (Position.X < 0)
                     resetPosition(Lado.Esquerda);
             }
             if (Keyboard.IsKeyPressed(Keyboard.Key.W))
             {
                 if (Position.Y >= 0)
                     SetPosition(0, -3.1f);
+                    lado = Lado.Cima;
 
                 if (Position.Y < 0)
                     resetPosition(Lado.Cima);
@@ -119,6 +117,7 @@ namespace GammingTest2
             {
                 if (Position.Y <= win.Size.Y - 35)
                     SetPosition(0, 3.1f);
+                    lado = Lado.Baixo;
 
                 if (Position.Y > win.Size.Y - 35)
                     resetPosition(Lado.Baixo);
