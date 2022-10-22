@@ -26,29 +26,108 @@ namespace GammingTest2
 
         public RenderWindow RenderWindow;
 
-        public Inimigo(RenderWindow renderWindow)
+        public Inimigo(RenderWindow renderWindow, Player player)
         {
             RenderWindow = renderWindow;
+            this.Player = player;
+        }
+        public Inimigo()
+        {
+          
         }
 
-        public float Vida { get; set; }
-        public Vector2f Position { get; set; } = new Vector2f(300, 400);
+        public float Vida { get; set; } = 100f;
+        public Vector2f Position { get; set; }
         public Vector2f Tamanho { get; set; } = new Vector2f(30, 30);
         public Lado Lado { get; set; }
-        public List<Inimigo> inimigos { get; set; }
+        public List<Inimigo> inimigosLista { get; set; } = new List<Inimigo>();
+        public Player Player { get; set; }
 
         public void Drawn()
         {
-            RenderWindow.Draw(desenhaInimigo());
+            if (inimigosLista.Count > 0)
+            {
+                foreach (var item in inimigosLista)
+                {
+                    RenderWindow.Draw(item.desenhaInimigo());
+                }
+               
+            }
+           
+        }
+
+        public Vector2f RandLocation()
+        {
+            int x = RandomNumber(50, 500);
+            int y = RandomNumber(50, 500);
+            return new Vector2f(x, y);
+        }
+
+        private int RandomNumber(int min, int max)
+        {
+            Random random = new Random();
+            return random.Next(min, max);
         }
 
         public void Update()
         {
+            if (inimigosLista.Count == 0)
+            {
+                Inimigo inimigo = new Inimigo()
+                {
+                    RenderWindow = RenderWindow,
+                    Position = RandLocation(),
+                    Player = Player,
+                };
 
+                inimigosLista.Add(inimigo);
+            }
+
+            if (inimigosLista.Count > 0)
+            {
+                foreach (var item in inimigosLista)
+                {
+
+                    float distancia = item.Player.Position.X - item.Position.X;
+                    float distancia2 = item.Player.Position.Y - item.Position.Y;
+
+                    if (distancia > 0)
+                    {
+                        Vector2f posx = item.Position;
+                        posx.X += 1;
+                        item.Position = posx;
+                    }
+                    else
+                    {
+                        Vector2f posx = item.Position;
+                        posx.X -= 1;
+                        item.Position = posx;
+                    }
+                    if (distancia2 > 0)
+                    {
+                        Vector2f posy = item.Position;
+                        posy.Y += 1;
+                        item.Position = posy;
+                    }
+                    else
+                    {
+
+                        Vector2f posy = item.Position;
+                        posy.Y -= 1;
+                        item.Position = posy;
+                    }
+                }
+            }
         }
         public void removeInimigo()
         {
-            Position = new Vector2f(-1000, -1000);
+            Inimigo inimigo = new Inimigo();
+            foreach (var item in inimigosLista)
+            {
+                inimigo = item;
+            };
+
+            inimigosLista.Remove(inimigo);
         }
         public RectangleShape desenhaInimigo()
         {
@@ -81,7 +160,7 @@ namespace GammingTest2
             player = new Player(renderWindow);
             Bala bala = new Bala(renderWindow, player);
             Frutas frutas = new Frutas(renderWindow);
-            Inimigo inimigo = new Inimigo(renderWindow);
+            Inimigo inimigo = new Inimigo(renderWindow, player);
 
 
             while (renderWindow.IsOpen)
@@ -93,6 +172,7 @@ namespace GammingTest2
                 bala.drawn();
                 bala.update();
                 inimigo.Drawn();
+                inimigo.Update();
                 if (RetornaColisaoPlayerFrutas(player, frutas))
                 {
                     frutas.removeFruta();
@@ -110,16 +190,20 @@ namespace GammingTest2
         }
         public bool RetornaColisaoTiroInimigo(Bala b, Inimigo i)
         {
-            foreach (var item in b.balaList)
+            foreach (var bLista in b.balaList)
             {
-                if (item.position.X < i.Position.X + i.Tamanho.X &&
-                    item.position.X + item.Tamanho.X > i.Position.X &&
-                    item.position.Y < i.Position.Y + i.Tamanho.Y &&
-                    item.position.Y + item.Tamanho.Y > i.Position.Y)
+                foreach (var iLista in i.inimigosLista)
                 {
-                    Console.WriteLine("Inimigo morto");
-                    return true;
+                    if (bLista.position.X < iLista.Position.X + iLista.Tamanho.X &&
+                    bLista.position.X + bLista.Tamanho.X > iLista.Position.X &&
+                    bLista.position.Y < iLista.Position.Y + iLista.Tamanho.Y &&
+                    bLista.position.Y + bLista.Tamanho.Y > iLista.Position.Y)
+                    {
+                        Console.WriteLine("Inimigo morto");
+                        return true;
+                    }
                 }
+                
             }
             Console.WriteLine("Inimigo vivo");
             return false;
