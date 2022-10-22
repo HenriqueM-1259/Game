@@ -3,7 +3,6 @@ using SFML.Graphics;
 using SFML.System;
 using SFML.Window;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace GammingTest2
@@ -34,7 +33,7 @@ namespace GammingTest2
         }
         public Inimigo()
         {
-          
+
         }
 
         public float Vida { get; set; } = 100f;
@@ -52,9 +51,16 @@ namespace GammingTest2
                 {
                     RenderWindow.Draw(item.desenhaInimigo());
                 }
-               
+
             }
-           
+
+        }
+        public void SetPosition(float? x, float? y)
+        {
+            Vector2f p = Position;
+            p.X += x.Value;
+            p.Y += y.Value;
+            Position = p;
         }
 
         public Vector2f RandLocation()
@@ -72,50 +78,60 @@ namespace GammingTest2
 
         public void Update()
         {
-            if (inimigosLista.Count == 0)
+            for (int i = 0; i < 5; i++)
             {
-                Inimigo inimigo = new Inimigo()
+                if (inimigosLista.Count < 5)
                 {
-                    RenderWindow = RenderWindow,
-                    Position = RandLocation(),
-                    Player = Player,
-                };
+                    Inimigo inimigo = new Inimigo()
+                    {
+                        RenderWindow = RenderWindow,
+                        Position = RandLocation(),
+                        Player = Player,
+                    };
 
-                inimigosLista.Add(inimigo);
+                    inimigosLista.Add(inimigo);
+                }
             }
+
+
 
             if (inimigosLista.Count > 0)
             {
+                if (inimigosLista.Count > 3)
+                {
+                   
+                }
+
                 foreach (var item in inimigosLista)
                 {
+                   
 
                     if (item.Position.X < Player.Position.X + Player.Tamanho.X)
                     {
                         Vector2f posx = item.Position;
-                        posx.X += 1 *3;
+                        posx.X += 1 * 3;
                         item.Position = posx;
-                    }                   
+                    }
                     if (item.Position.X > Player.Position.X + Player.Tamanho.X)
                     {
                         Vector2f posx = item.Position;
                         posx.X -= 1 * 3;
                         item.Position = posx;
                     }
-                    
+
                     if (item.Position.Y + item.Tamanho.Y < Player.Position.Y + Player.Tamanho.Y)
                     {
                         Vector2f posy = item.Position;
                         posy.Y += 1 * 3;
                         item.Position = posy;
-                    }                
+                    }
                     if (item.Position.Y + item.Tamanho.Y > Player.Position.Y + Player.Tamanho.Y)
                     {
                         Vector2f posy = item.Position;
                         posy.Y -= 1 * 3;
                         item.Position = posy;
                     }
-                    
-                    
+
                 }
             }
         }
@@ -203,7 +219,7 @@ namespace GammingTest2
                         return true;
                     }
                 }
-                
+
             }
             Console.WriteLine("Inimigo vivo");
             return false;
@@ -218,9 +234,9 @@ namespace GammingTest2
                    p.Position.Y + p.Tamanho.Y > item.posicao.Y)
                 {
                     Console.WriteLine("colidindo");
-                   return true;
+                    return true;
 
-                }              
+                }
             }
             return false;
         }

@@ -14,6 +14,7 @@ namespace GammingTest2
      public class Player
     {
         
+        
         public Player(RenderWindow win)
         {
             this.win = win;         
@@ -21,6 +22,7 @@ namespace GammingTest2
         public RenderWindow  win { get; set; }
         public Vector2f Position { get; set; } = new Vector2f(100,100);
         public Vector2f Tamanho { get; set; } = new Vector2f(25, 40);
+        public Texture textura { get; set; } = new Texture(".\\src\\pdesenhoteste.png",new IntRect() { Height = 100,Left = 50, Top = 100, Width = 50});
         private RectangleShape rectangleShape { get; set; }
         public float velocity { get; set; } = 2.5f;
         public Lado lado { get; set; }
@@ -71,6 +73,7 @@ namespace GammingTest2
 
         public void Drawn()
         {
+          
             win.Draw(CriarPersonagem());
             
           
@@ -80,7 +83,8 @@ namespace GammingTest2
         {
             keyBoard();
             
-                
+
+
         }
 
 
