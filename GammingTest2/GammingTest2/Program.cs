@@ -3,6 +3,7 @@ using SFML.Graphics;
 using SFML.System;
 using SFML.Window;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace GammingTest2
@@ -71,7 +72,7 @@ namespace GammingTest2
 
         public void Update()
         {
-            if (inimigosLista.Count < 4)
+            if (inimigosLista.Count == 0)
             {
                 Inimigo inimigo = new Inimigo()
                 {
@@ -88,34 +89,33 @@ namespace GammingTest2
                 foreach (var item in inimigosLista)
                 {
 
-                    float distancia = item.Player.Position.X - item.Position.X;
-                    float distancia2 = item.Player.Position.Y - item.Position.Y;
-
-                    if (distancia > 0)
+                    if (item.Position.X < Player.Position.X + Player.Tamanho.X)
                     {
                         Vector2f posx = item.Position;
-                        posx.X += 1;
+                        posx.X += 1 *3;
                         item.Position = posx;
-                    }
-                    else
+                    }                   
+                    if (item.Position.X > Player.Position.X + Player.Tamanho.X)
                     {
                         Vector2f posx = item.Position;
-                        posx.X -= 1;
+                        posx.X -= 1 * 3;
                         item.Position = posx;
                     }
-                    if (distancia2 > 0)
+                    
+                    if (item.Position.Y + item.Tamanho.Y < Player.Position.Y + Player.Tamanho.Y)
                     {
                         Vector2f posy = item.Position;
-                        posy.Y += 1;
+                        posy.Y += 1 * 3;
                         item.Position = posy;
-                    }
-                    else
+                    }                
+                    if (item.Position.Y + item.Tamanho.Y > Player.Position.Y + Player.Tamanho.Y)
                     {
-
                         Vector2f posy = item.Position;
-                        posy.Y -= 1;
+                        posy.Y -= 1 * 3;
                         item.Position = posy;
                     }
+                    
+                    
                 }
             }
         }
