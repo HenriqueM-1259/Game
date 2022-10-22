@@ -19,11 +19,49 @@ namespace GammingTest2
         }
 
     }
-   /*
-    public class Bala
+
+    public class Inimigo
     {
 
-    }*/
+
+        public RenderWindow RenderWindow;
+
+        public Inimigo(RenderWindow renderWindow)
+        {
+            RenderWindow = renderWindow;
+        }
+
+        public float Vida { get; set; }
+        public Vector2f Position { get; set; } = new Vector2f(300, 400);
+        public Vector2f Tamanho { get; set; } = new Vector2f(30, 30);
+        public Lado Lado { get; set; }
+        public List<Inimigo> inimigos { get; set; }
+
+        public void Drawn()
+        {
+            RenderWindow.Draw(desenhaInimigo());
+        }
+
+        public void Update()
+        {
+
+        }
+        public void removeInimigo()
+        {
+            Position = new Vector2f(-1000, -1000);
+        }
+        public RectangleShape desenhaInimigo()
+        {
+            RectangleShape inimigo = new RectangleShape()
+            {
+                Position = Position,
+                Size = Tamanho,
+                FillColor = Color.Black
+            };
+
+            return inimigo;
+        }
+    }
 
     class ViewWindow
     {
@@ -43,24 +81,26 @@ namespace GammingTest2
             player = new Player(renderWindow);
             Bala bala = new Bala(renderWindow, player);
             Frutas frutas = new Frutas(renderWindow);
+            Inimigo inimigo = new Inimigo(renderWindow);
 
 
             while (renderWindow.IsOpen)
             {
                 renderWindow.DispatchEvents();
                 renderWindow.Clear(Color.White);
-                //arma.resetBala(player.Position);
                 player.Drawn();
                 player.Update();
-                bala.deleybalasecond = 50;
                 bala.drawn();
                 bala.update();
-
+                inimigo.Drawn();
                 if (RetornaColisaoPlayerFrutas(player, frutas))
                 {
                     frutas.removeFruta();
                 }
-
+                if (RetornaColisaoTiroInimigo(bala, inimigo))
+                {
+                    inimigo.removeInimigo();
+                }
                 frutas.Drawn();
                 frutas.Update();
                 renderWindow.Display();
@@ -68,16 +108,35 @@ namespace GammingTest2
 
 
         }
+        public bool RetornaColisaoTiroInimigo(Bala b, Inimigo i)
+        {
+            foreach (var item in b.balaList)
+            {
+                if (item.position.X < i.Position.X + i.Tamanho.X &&
+                    item.position.X + item.Tamanho.X > i.Position.X &&
+                    item.position.Y < i.Position.Y + i.Tamanho.Y &&
+                    item.position.Y + item.Tamanho.Y > i.Position.Y)
+                {
+                    Console.WriteLine("Inimigo morto");
+                    return true;
+                }
+            }
+            Console.WriteLine("Inimigo vivo");
+            return false;
+        }
         public bool RetornaColisaoPlayerFrutas(Player p, Frutas f)
         {
-            if (p.Position.X < f.posicao.X + f.tamanho.X &&
-                p.Position.X + p.Tamanho.X > f.posicao.X &&
-                p.Position.Y < f.posicao.Y + f.tamanho.Y &&
-                p.Position.Y + p.Tamanho.Y > f.posicao.Y)
+            foreach (var item in f.FrutasLista)
             {
+                if (p.Position.X < item.posicao.X + item.tamanho.X &&
+                   p.Position.X + p.Tamanho.X > item.posicao.X &&
+                   p.Position.Y < item.posicao.Y + item.tamanho.Y &&
+                   p.Position.Y + p.Tamanho.Y > item.posicao.Y)
+                {
+                    Console.WriteLine("colidindo");
+                   return true;
 
-                return true;
-
+                }              
             }
             return false;
         }

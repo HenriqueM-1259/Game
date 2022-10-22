@@ -4,7 +4,6 @@ using SFML.System;
 using SFML.Window;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.Tracing;
 
 namespace GammingTest2
 {
@@ -87,7 +86,7 @@ namespace GammingTest2
                 switch (item.ladotiro)
                 {
                     case Lado.Cima:
-                        if (item.position.Y  < 0)
+                        if (item.position.Y < 0)
                         {
                             balas.Add(item);
                             Console.WriteLine("processo de exclusao: " + balaList.Count);
@@ -242,9 +241,9 @@ namespace GammingTest2
         }
         public void atirar()
         {
-
+            //verifica se a tecla F foi pressionada
             if (Keyboard.IsKeyPressed(Keyboard.Key.F))
-            {
+            {   //verifica se existe bala na lista de bala
                 if (balaList.Count == 0)
                 {
 
@@ -252,51 +251,49 @@ namespace GammingTest2
                     {
                         renderWindow = renderWindow
                     };
-
+                    float posx1 = 0;
+                    float posy1 = 0;
+                    Vector2f v1;
+                    //caso tenha ele vai verificar que lado o player esta olhando
                     switch (player.lado)
-                    {
+                    {   // em cada caso ele monta o obejto igual a tira, mas com a direcao diferente... mais pra frente ira fazer sentido kkk
+
                         case Lado.Cima:
                             bala.ladotiro = Lado.Cima;
-                            float posx1 = player.Position.X + ( player.Tamanho.X /2);
-                            float posy1 = player.Position.Y - 8;
-                            Vector2f v1 = new Vector2f(posx1, posy1);
+                            posx1 = player.Position.X + (player.Tamanho.X / 2);
+                            posy1 = player.Position.Y - 8;
+                            v1 = new Vector2f(posx1, posy1);
                             bala.position = v1;
                             permapos = v1;
-                            balaList.Add(bala);
                             break;
                         case Lado.Direita:
                             bala.ladotiro = Lado.Direita;
-                            float posx2 = player.Position.X + player.Tamanho.X;
-                            float posy2 = player.Position.Y + 6;
-                            Vector2f v2 = new Vector2f(posx2, posy2);
-                            bala.position = v2;
-                            permapos = v2;
-                            balaList.Add(bala);
+                            posx1 = player.Position.X + player.Tamanho.X;
+                            posy1 = player.Position.Y + 6;
+                            v1 = new Vector2f(posx1, posy1);
+                            bala.position = v1;
+                            permapos = v1;
                             break;
                         case Lado.Esquerda:
                             bala.ladotiro = Lado.Esquerda;
-                            float posx3 = player.Position.X - 4;
-                            float posy3 = player.Position.Y + 6;
-                            Vector2f v3 = new Vector2f(posx3, posy3);
-                            bala.position = v3;
-                            permapos = v3;
-                            balaList.Add(bala);
+                            posx1 = player.Position.X - 4;
+                            posy1 = player.Position.Y + 6;
+                            v1 = new Vector2f(posx1, posy1);
+                            bala.position = v1;
+                            permapos = v1;
                             break;
                         case Lado.Baixo:
                             bala.ladotiro = Lado.Baixo;
-                            float posx4 = player.Position.X + (player.Tamanho.X / 2);
-                            float posy4 = player.Position.Y + 20;
-                            Vector2f v4 = new Vector2f(posx4, posy4);
-                            bala.position = v4;
-                            permapos = v4;
-                            balaList.Add(bala);
+                            posx1 = player.Position.X + (player.Tamanho.X / 2);
+                            posy1 = player.Position.Y + 20;
+                            v1 = new Vector2f(posx1, posy1);
+                            bala.position = v1;
+                            permapos = v1;
                             break;
                         default:
                             break;
                     }
-                    
-                    
-                   
+                    balaList.Add(bala);
                 }
                 else if (balaList.Count > 0)
                 {
@@ -313,47 +310,51 @@ namespace GammingTest2
                         {
                             renderWindow = renderWindow
                         };
+                        float posx1 = 0;
+                        float posy1 = 0;
+                        Vector2f v1;
+                        //caso tenha ele vai verificar que lado o player esta olhando
                         switch (player.lado)
-                        {
+                        {   // em cada caso ele monta o obejto igual a tira, mas com a direcao diferente... mais pra frente ira fazer sentido kkk
+
                             case Lado.Cima:
                                 bala.ladotiro = Lado.Cima;
-                                float posx1 = player.Position.X + (player.Tamanho.X / 2);
-                                float posy1 = player.Position.Y - 8;
-                                Vector2f v1 = new Vector2f(posx1, posy1);
+                                posx1 = player.Position.X + (player.Tamanho.X / 2);
+                                posy1 = player.Position.Y - 8;
+                                v1 = new Vector2f(posx1, posy1);
                                 bala.position = v1;
                                 permapos = v1;
-                                balaList.Add(bala);
                                 break;
                             case Lado.Direita:
                                 bala.ladotiro = Lado.Direita;
-                                float posx2 = player.Position.X + player.Tamanho.X;
-                                float posy2 = player.Position.Y + 6;
-                                Vector2f v2 = new Vector2f(posx2, posy2);
-                                bala.position = v2;
-                                permapos = v2;
-                                balaList.Add(bala);
+                                posx1 = player.Position.X + player.Tamanho.X;
+                                posy1 = player.Position.Y + 6;
+                                v1 = new Vector2f(posx1, posy1);
+                                bala.position = v1;
+                                permapos = v1;
                                 break;
                             case Lado.Esquerda:
                                 bala.ladotiro = Lado.Esquerda;
-                                float posx3 = player.Position.X - 4;
-                                float posy3 = player.Position.Y + 6;
-                                Vector2f v3 = new Vector2f(posx3, posy3);
-                                bala.position = v3;
-                                permapos = v3;
-                                balaList.Add(bala);
+                                posx1 = player.Position.X - 4;
+                                posy1 = player.Position.Y + 6;
+                                v1 = new Vector2f(posx1, posy1);
+                                bala.position = v1;
+                                permapos = v1;
                                 break;
                             case Lado.Baixo:
                                 bala.ladotiro = Lado.Baixo;
-                                float posx4 = player.Position.X + (player.Tamanho.X / 2);
-                                float posy4 = player.Position.Y + 20;
-                                Vector2f v4 = new Vector2f(posx4, posy4);
-                                bala.position = v4;
-                                permapos = v4;
-                                balaList.Add(bala);
+                                posx1 = player.Position.X + (player.Tamanho.X / 2);
+                                posy1 = player.Position.Y + 20;
+                                v1 = new Vector2f(posx1, posy1);
+                                bala.position = v1;
+                                permapos = v1;
                                 break;
                             default:
                                 break;
+
                         }
+
+                        balaList.Add(bala);
 
                     }
 
