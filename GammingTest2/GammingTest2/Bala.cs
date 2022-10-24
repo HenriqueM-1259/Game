@@ -1,9 +1,11 @@
 ﻿using GammingTest2.Enums;
+using SFML.Audio;
 using SFML.Graphics;
 using SFML.System;
 using SFML.Window;
 using System;
 using System.Collections.Generic;
+
 
 namespace GammingTest2
 {
@@ -29,10 +31,22 @@ namespace GammingTest2
         public float velocity { get; set; } = 3;
         public Vector2f permapos;
         public Lado ladotiro { get; set; }
+        public Sound Sound { get; set; }
 
         public void drawn()
         {
             DesenhaDirecaoBala();
+        }
+        public void setSOund()
+        {
+            SoundBuffer soundbuffer = new SoundBuffer(".\\src\\Music\\gunmachine.wav");
+            Sound sound = new Sound();
+            sound.SoundBuffer = soundbuffer;
+            sound.Volume = 4;
+            Time timer = new Time();
+
+            //this.Sound.MinDistance = 1;
+            this.Sound = sound;
         }
         public void DesenhaDirecaoBala()
         {
@@ -123,6 +137,11 @@ namespace GammingTest2
                 Console.WriteLine("exclusao Quantidade" + balas.Count.ToString());
             }
         }
+        public void removeBala(Bala bala)
+        {
+            balaList.Remove(bala);
+        }
+
         public void disparaBala()
         {
             if (balaList.Count > 0)
@@ -244,6 +263,7 @@ namespace GammingTest2
             //verifica se a tecla F foi pressionada
             if (Keyboard.IsKeyPressed(Keyboard.Key.F))
             {   //verifica se existe bala na lista de bala
+                
                 if (balaList.Count == 0)
                 {
 
@@ -294,6 +314,10 @@ namespace GammingTest2
                             break;
                     }
                     balaList.Add(bala);
+                    if (this.Sound != null)
+                    {
+                        this.Sound.Play();
+                    }
                 }
                 else if (balaList.Count > 0)
                 {
@@ -355,10 +379,15 @@ namespace GammingTest2
                         }
 
                         balaList.Add(bala);
+                        if (this.Sound != null)
+                        {
+                            this.Sound.Play();
+                        }
 
                     }
 
                 }
+                
 
 
             }

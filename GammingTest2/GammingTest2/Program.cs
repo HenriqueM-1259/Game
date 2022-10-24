@@ -1,4 +1,5 @@
 ﻿using GammingTest2.Enums;
+using SFML.Audio;
 using SFML.Graphics;
 using SFML.System;
 using SFML.Window;
@@ -160,25 +161,26 @@ namespace GammingTest2
         public void Run()
         {
 
-            
-            
-            
             RenderWindow renderWindow;
             renderWindow = new RenderWindow(new VideoMode(860, 500), "First window");
             renderWindow.Closed += (_, __) => renderWindow.Close();
             renderWindow.SetVerticalSyncEnabled(true);
             renderWindow.SetFramerateLimit(30);
+            Music music = new Music(".\\src\\Music\\Music.wav");
+           
+            
             Console.WriteLine("Iniciado...");
-
+            
             Player player;
-
+            
             player = new Player(renderWindow);
             Bala bala = new Bala(renderWindow, player);
+            bala.setSOund();
             Frutas frutas = new Frutas(renderWindow);
             Inimigo inimigo = new Inimigo(renderWindow, player);
             PlayerSprite playerSprite = new PlayerSprite(player);
-
-
+            music.Volume = 10;
+            music.Play();
             while (renderWindow.IsOpen)
             {
                 renderWindow.DispatchEvents();
@@ -198,6 +200,7 @@ namespace GammingTest2
                 }
                 if (RetornaColisaoTiroInimigo(bala, inimigo))
                 {
+                   
                     inimigo.removeInimigo();
                 }
                 frutas.Drawn();
@@ -220,6 +223,7 @@ namespace GammingTest2
                     bLista.position.Y + bLista.Tamanho.Y > iLista.Position.Y)
                     {
                         Console.WriteLine("Inimigo morto");
+                        b.removeBala(bLista);
                         return true;
                     }
                 }

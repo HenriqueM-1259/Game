@@ -1,4 +1,5 @@
 ﻿using GammingTest2.Enums;
+using SFML.Audio;
 using SFML.Graphics;
 using SFML.System;
 using SFML.Window;
@@ -45,7 +46,7 @@ namespace GammingTest2
         //reseta a posicao do objeto caso ele saia da tela
         /*EXEMPLO se o player sair da tela do lado direito ele vai resetar o x do player para 0
          pois ele ultrapassou o limite da tela */
-
+       
         public void resetPosition(Lado lado)
         {
             Vector2f posAnteriore = Position;

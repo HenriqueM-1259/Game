@@ -36,13 +36,7 @@ namespace GammingTest2
                 this.sprite = new Sprite(this.texture, reactSourceSprite);
                 this.sprite.Scale = new Vector2f(1, 1);
                 this.sprite.Position = player.Position;
-            }          
-            else if (Keyboard.IsKeyPressed(Keyboard.Key.W))
-            {
-                this.texture = new Texture(".\\src\\1Characters\\3Cyborg\\Idle1.png");
-                this.sprite = new Sprite(this.texture, reactSourceSprite);
-                this.sprite.Position = player.Position;
-            }         
+            }                          
             else if (Keyboard.IsKeyPressed(Keyboard.Key.A))
             {
                 this.texture = new Texture(".\\src\\1Characters\\3Cyborg\\Run1.png");
@@ -51,10 +45,32 @@ namespace GammingTest2
                 this.sprite.Position = player.Position;
             }
             else
-            {              
+            {
+                if (this.sprite != null)
+                {
+                    if (this.sprite.Scale.X == -1)
+                    {
+                        this.texture = new Texture(".\\src\\1Characters\\3Cyborg\\Idle1.png");
+                        this.sprite = new Sprite(this.texture, reactSourceSprite);
+                        this.sprite.Scale = new Vector2f(-1, 1);
+                        this.sprite.Position = player.Position;
+
+                    }
+                    else
+                    {
+                        this.texture = new Texture(".\\src\\1Characters\\3Cyborg\\Idle1.png");
+                        this.sprite = new Sprite(this.texture, reactSourceSprite);
+                        this.sprite.Position = player.Position;
+                    }
+                }
+                else
+                {
                     this.texture = new Texture(".\\src\\1Characters\\3Cyborg\\Idle1.png");
                     this.sprite = new Sprite(this.texture, reactSourceSprite);
                     this.sprite.Position = player.Position;
+                }
+                
+                   
 
             }
            
