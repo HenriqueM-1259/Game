@@ -4,6 +4,7 @@ using SFML.System;
 using SFML.Window;
 using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 
 namespace GammingTest2
 {
@@ -78,9 +79,8 @@ namespace GammingTest2
 
         public void Update()
         {
-            for (int i = 0; i < 5; i++)
-            {
-                if (inimigosLista.Count < 5)
+           
+                if (inimigosLista.Count == 0)
                 {
                     Inimigo inimigo = new Inimigo()
                     {
@@ -91,16 +91,12 @@ namespace GammingTest2
 
                     inimigosLista.Add(inimigo);
                 }
-            }
 
+            
 
 
             if (inimigosLista.Count > 0)
             {
-                if (inimigosLista.Count > 3)
-                {
-                   
-                }
 
                 foreach (var item in inimigosLista)
                 {
@@ -164,11 +160,14 @@ namespace GammingTest2
         public void Run()
         {
 
+            
+            
+            
             RenderWindow renderWindow;
             renderWindow = new RenderWindow(new VideoMode(860, 500), "First window");
             renderWindow.Closed += (_, __) => renderWindow.Close();
             renderWindow.SetVerticalSyncEnabled(true);
-            renderWindow.SetFramerateLimit(60);
+            renderWindow.SetFramerateLimit(30);
             Console.WriteLine("Iniciado...");
 
             Player player;
@@ -177,6 +176,7 @@ namespace GammingTest2
             Bala bala = new Bala(renderWindow, player);
             Frutas frutas = new Frutas(renderWindow);
             Inimigo inimigo = new Inimigo(renderWindow, player);
+            PlayerSprite playerSprite = new PlayerSprite(player);
 
 
             while (renderWindow.IsOpen)
@@ -184,8 +184,11 @@ namespace GammingTest2
                 renderWindow.DispatchEvents();
                 renderWindow.Clear(Color.White);
                 player.Drawn();
-                player.Update();
+                player.Update();                
                 bala.drawn();
+                playerSprite.Update();           
+                playerSprite.Drawn();
+                
                 bala.update();
                 inimigo.Drawn();
                 inimigo.Update();
@@ -199,6 +202,7 @@ namespace GammingTest2
                 }
                 frutas.Drawn();
                 frutas.Update();
+                renderWindow.Draw(playerSprite.Drawn());
                 renderWindow.Display();
             }
 

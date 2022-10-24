@@ -152,4 +152,3 @@ C:\Git\Game\GammingTest2\GammingTest2\obj\Debug\netcoreapp3.1\GammingTest2.cspro
 C:\Git\Game\GammingTest2\GammingTest2\obj\Debug\netcoreapp3.1\GammingTest2.dll
 C:\Git\Game\GammingTest2\GammingTest2\obj\Debug\netcoreapp3.1\GammingTest2.pdb
 C:\Git\Game\GammingTest2\GammingTest2\obj\Debug\netcoreapp3.1\GammingTest2.genruntimeconfig.cache
-C:\Git\Game\GammingTest2\GammingTest2\bin\Debug\netcoreapp3.1\src\pdesenhoteste.png
